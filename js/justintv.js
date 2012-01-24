@@ -6,11 +6,11 @@
 // CONSTANTS
 var FALLBACK = {
     URL: 'http://static.justin.tv/previews/404_user_50x50.png'
-}
+};
 var PAGINATION = {
     FROM: 1,
     ITEMS_PER_PAGE: 6
-}
+};
 
 var User = Backbone.Model.extend();
 
