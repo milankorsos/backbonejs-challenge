@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+ 
+<title>Justin.tv</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="css/justintv.css" />
+<body>
+  <section id="users-widget">
+    <div id="header">
+      <h1>Manage users</h1>
+      <input class="supercheckbox" type="checkbox">
+    </div>
+    <ul id="users"></ul>
+    <div id="footer"></div>
+  </section>
+</body>
+
+<!-- JS templates -->
+<script type="text/template" id="users-tmpl">
+<% for (var index = 0; index < users.length; index++) { %>
+  <% var u = users[index]; %>
+  <li class="user" data-name="<%= u.name %>">
+    <img src="<%= u.image %>" />
+    <span><%= u.name %></span>
+    <input type="checkbox" <% if (u.selected) { %>checked="checked"<% } %>>
+  </li>
+<% } %>
+</script>
+
+<script type="text/template" id="footer-tmpl">
+  <div id="count"><%= data.countFrom %><%if (data.countTo !== 0) { %> - <%= data.countTo %> <% } %> / <%= data.countTotal %></div>
+  <div id="pagination">
+  <% for (var i = 1; i <= data.paginationTotal; i++) { %>
+    <% if (i == data.paginationCurrent) { %>
+      <%= i %>
+    <% } else { %>
+      <a href="#<%= i %>" data-page=<%= i %>><%= i %></a>        
+    <% } %>
+  <% } %>
+</script>    
+
+<!-- JS libraries -->
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/underscore.js"></script>
+<script type="text/javascript" src="js/backbone.js"></script>
+
+<!-- JS application -->
+<script>
+    var users = [
+    {name: "brummel75",
+        selected: false,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/brummel75-profile_image-a7b8c00e964ced0b-50x50.jpeg"},
+    {name: "streamarn",
+        selected: true,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/streamarn-profile_image-710602251a5ed4a6-50x50.jpeg"},
+    {name: "5by5",
+        selected: false,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/5by5-profile_image-0719f81aa3437682-50x50.png"},
+    {name: "eatmusic",
+        selected: false,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/eatmusic-profile_image-a6ad61f9523ee6c1-50x50.png"},
+    {name: "m3zzah",
+        selected: true,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/m3zzah-profile_image-7842d1de01be8256-50x50.jpeg"},
+    {name: "fifus90",
+        selected: true,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/fifus90-profile_image-7d5882035b04e91a-50x50.jpeg"},
+    {name: "radiofiel",
+        selected: true,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/radiofiel-profile_image-e4c5de3f22edb260-50x50.png"},
+    {name: "lithcause",
+        "selected": true,
+        "image": "http://static-cdn.jtvnw.net/jtv_user_pictures/lithcause-profile_image-0f6dac5d46b344d2-50x50.jpeg"},
+    {name: "nuperceptionradio",
+        selected: false,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/nuperceptionradio-profile_image-efa598d2b843b464-50x50.jpeg"},
+    {name: "iglesiaradio",
+        selected: true,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/iglesiaradio-profile_image-5cb03445e357c647-50x50.jpeg"},
+    {name: "djjoshb",
+        selected: false,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/djjoshb-profile_image-889c1d7f0f55e8c2-50x50.jpeg"},
+    {name: "adsq81",
+        selected: true,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/adsq81-profile_image-7743b60b30488f62-50x50.jpeg"},
+    {name: "telecincotdt",
+        selected: false,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/telecincotdt-profile_image-6d9b20e429ece5c0-50x50.jpeg"},
+    {name: "casadelbanqueteus",
+        selected: true,
+        image: null},
+    {name: "jabothebear",
+        selected: true,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/jabothebear-profile_image-416f60fe30b85d42-50x50.jpeg"},
+    {name: "ehhhhhhh",
+        selected: false,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/ehhhhhhh-profile_image-f0bd431cb7349352-50x50.jpeg"},
+    {name: "djabm",
+        selected: false,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/djabm-profile_image-bb5443335793bfe8-50x50.jpeg"},
+    {name: "magnetssc",
+        selected: false,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/magnetssc-profile_image-8379bb40e75163e6-50x50.jpeg"},
+    {name: "islahtv",
+        selected: true,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/islahtv-profile_image-e314c354b0310e2b-50x50.jpeg"},
+    {name: "fmsol", 
+        selected: true,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/fmsol-profile_image-997d8d2a9415afe6-50x50.jpeg"},
+    {name: "mark5171",
+        selected: true,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/mark5171-profile_image-865f2393732a57b5-50x50.jpeg"},
+    {name: "ookamisaori",
+        selected: true,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/ookamisaori-profile_image-4248a1520c0c8257-50x50.jpeg"},
+    {name: "serg_nightspeller", 
+        selected: false,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/serg_nightspeller-profile_image-8ffe83d49acd1ec6-50x50.jpeg"},
+    {name: "okbadirect3",
+        selected: false,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/okbadirect3-profile_image-6bae554987af6663-50x50.jpeg"},
+    {name: "radiobtn",
+        selected: true,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/radiobtn-profile_image-1c6fb48661951775-50x50.jpeg"},
+    {name: "rederecordbrasil",
+        selected: true,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/rederecordbrasil-profile_image-259c9afc9677c4a2-50x50.jpeg"},
+    {name: "joninazskpe",
+        selected: false,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/joninazskpe-profile_image-9f93765dba8fd0f5-50x50.jpeg"},
+    {name: "radiolibertadsalta",
+        selected: false,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/radiolibertadsalta-profile_image-9692c2b42cff626c-50x50.jpeg"},
+    {name: "dkchandail",
+        selected: false,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/dkchandail-profile_image-0578303c66d535ab-50x50.png"},
+    {name: "smunksi", 
+        selected: false,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/smunksi-profile_image-3e6d4eacc2040895-50x50.jpeg"},
+    {name: "esperanzaeterna",
+        selected: false,
+        image: "http://static-cdn.jtvnw.net/jtv_user_pictures/esperanzaeterna-profile_image-999be60c9b9212d7-50x50.jpeg"}]; 
+</script> 
+<script type="text/javascript" src="js/justintv.js"></script>
+
+</html>
