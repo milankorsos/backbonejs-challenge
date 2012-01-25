@@ -8,7 +8,6 @@ var FALLBACK = {
     URL: 'http://static.justin.tv/previews/404_user_50x50.png'
 };
 var PAGINATION = {
-    FROM: 1,
     ITEMS_PER_PAGE: 6
 };
 
@@ -33,7 +32,7 @@ var UsersView = Backbone.View.extend({
         this.$superCheckbox = $('.supercheckbox');
 
         // set the initial pagination values
-        this.paginationFrom = PAGINATION.FROM;
+        this.paginationFrom = 1;
         this.paginationItemsPerPage = PAGINATION.ITEMS_PER_PAGE;
 
         // creating the collection
